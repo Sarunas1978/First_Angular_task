@@ -11,9 +11,9 @@
     </thead>
     <tbody>
     <tr *ngFor="let product of products">
-      <td>{{product.name}}</td>
+      <td><b>{{product.name}}</b></td>
       <td>{{product.price}}</td>
-      <td>{{product.quantity}}</td> <!-- TODO: Display the quantity in red if it is lower than 3 -->
+      <td [style.color]="product.quantity<3 ? 'red' : null">{{product.quantity}}</td> <!-- TODO: Display the quantity in red if it is lower than 3 -->
       <td>{{product.store}}</td>
     </tr>
 

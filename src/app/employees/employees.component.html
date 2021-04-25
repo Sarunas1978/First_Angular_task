@@ -6,30 +6,69 @@
       <th scope="col">ID</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
-      <!-- TODO: Add a column for an avatar -->
+      <th scope="col">Avatar</th><!-- TODO: Add a column for an avatar -->
       <th scope="col">Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>123</td>
-      <td>Added name 1</td>
-      <td>email@email.com</td>
-      <td><button type="button" class="btn btn-danger">Delete</button></td>
-    </tr>
-    <tr>
-      <td>124</td>
-      <td>Added name 2</td>
-      <td>email2@email.com</td>
-      <td><button type="button" class="btn btn-danger">Delete</button></td>
-    </tr>
+      <tr *ngFor="let employee of employees">
+        <td><b>{{employee.id}}</b></td>
+        <td>{{employee.name}}</td>
+        <td>{{employee.email}}</td> 
+        <td><img src={{employee.avatar}} alt="Image not available"></td>
+        <td><button type="button" class="btn btn-danger" (click)="deleteEmployee(employee.id)">Delete</button></td>
+      </tr>
+      <tr class="input-row" [formGroup]="form">
+        <td><input formControlName="id" type="text" placeholder="ID" class="form-control"></td>
+        <td><input formControlName="name" type="text" placeholder="Name" class="form-control"></td>
+        <td><input formControlName="email" type="email" placeholder="Email" class="form-control"></td>
+        <td><input formControlName="avatar" type="text" placeholder="Avatar"  class="form-control"></td>
+        <td><button type="submit" class="btn btn-success" style="width: 70px" (click)="addEmployee()">Add</button></td>
+      </tr>
+      <tr >
+        <td>
+          <div *ngIf="!form.controls['id'].valid && form.controls['id'].touched">
+            <div *ngIf="form.controls['id'].errors.required" style="background-color: magenta">
+              ID is required!
+            </div>
+            <div *ngIf="form.controls['id'].errors.pattern" style="background-color: magenta">
+              Only numbers are allowed
+            </div>
+            </div>
+        </td>
+        <td>
+            <div *ngIf="!form.controls['name'].valid && form.controls['name'].touched">
+            <div *ngIf="form.controls['name'].errors.required" style="background-color: magenta">
+              Name is required!
+            </div>
+            <div *ngIf="form.controls['name'].errors.pattern" style="background-color: magenta">
+              Only letters are allowed
+            </div>
+            </div>
+        </td>
+        <td>
+          <div *ngIf="!form.controls['email'].valid && form.controls['email'].touched">
+          <div *ngIf="form.controls['email'].errors.required" style="background-color: magenta">
+            Email is required!
+          </div>
+          <div *ngIf="form.controls['email'].errors.pattern" style="background-color: magenta">
+            Enter valid email!
+          </div>
+          </div>
+        </td>
+        <td>
+          <div *ngIf="!form.controls['avatar'].valid && form.controls['avatar'].touched">
+          <div *ngIf="form.controls['email'].errors.required" style="background-color: magenta">
+            Avatar is required!
+          </div>
+          <div *ngIf="form.controls['avatar'].errors.pattern" style="background-color: magenta">
+            Enter valid avatar in *.jpg!
+          </div>
+          </div>
+        </td>
+        
 
-    <tr class="input-row" [formGroup]="form">
-      <td><input formControlName="id" type="text" placeholder="ID" class="form-control"></td>
-      <td><input formControlName="name" type="text" placeholder="Name" class="form-control"></td>
-      <td><input formControlName="email" type="text" placeholder="Email" class="form-control"></td>
-      <td><button type="submit" class="btn btn-success" style="width: 70px">Add</button></td>
-    </tr>
+      </tr>
     </tbody>
   </table>
 </div>
